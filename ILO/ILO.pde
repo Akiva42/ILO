@@ -2,7 +2,8 @@
 //www.akivadesign.com
 //www.akiva@cmu.edu
 
-//Icons by: Pham Thi Dieu Linh
+//Icons by:
+//Pham Thi Dieu Linh
 //Castor & Pollux
 //Veronika Krpciarova
 //Tom J Hume
@@ -14,6 +15,7 @@ import oscP5.*;
 
 ChildApplet child;
 public Minim minim;
+public Movie moviePlayer;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
 Cell[][] cells;
@@ -174,6 +176,14 @@ void oscEvent(OscMessage theOscMessage) {
   println(" typetag: "+theOscMessage.typetag());
 }
 //---------------
+void loadMovie(String fileName_) {
+  moviePlayer = new Movie(this, fileName_);
+}
+//---------------
+void playMovie() {
+  moviePlayer.play();
+}
+//---------------
 void movieEvent(Movie m) {
   m.read();
 }
@@ -198,15 +208,8 @@ class ChildApplet extends PApplet {
   //--------
   public void draw() {
     background(0);
-    pushStyle();
-    strokeWeight(100);
-    stroke(255);
-    point(width/2, height/2);
-    popStyle();
-    for (int x = 0; x < cells.length; x++) {
-      for (int y = 0; y < cells[x].length; y++) {
-        cells[x][y].displayVideo();
-      }
+    if (moviePlayer != null) {
+      image(moviePlayer, 0, 0, width, height);
     }
   }
 }

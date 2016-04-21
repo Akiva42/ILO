@@ -47,7 +47,7 @@ class Button {
       parentCell.audioPlayer = minim.loadFile(fileName);
     }
     if (parentCell.getType() == "video") {
-      parentCell.moviePlayer = new Movie(parentCell.parent, fileName);
+      loadMovie(fileName);
     }
     buttonText = fileName;
   }

@@ -11,7 +11,6 @@ class Cell {
   String fileName;
   public PApplet parent;
   public AudioPlayer audioPlayer;
-  public Movie moviePlayer;
   //-----------------
   Cell(float x_, float y_, float size_, String type_, PApplet parent_) {
     x = x_;
@@ -33,9 +32,6 @@ class Cell {
   //-----------------
   void update(float scroll, boolean mouseClicked) {
     y = map(scroll, 0, height, 0, -height) + yOffset;
-    if (moviePlayer != null) {
-      image(moviePlayer, 0, 0);
-    }
     pushStyle();
     if (selected) {
       pushStyle();
@@ -113,20 +109,12 @@ class Cell {
       }
     }
     if (type == "video") {
-      if (moviePlayer != null) {
-        moviePlayer.loop();
-      }
+      playMovie();
     }
     if (type == "other") {
       if (fileName != null) {
         sendOsc(fileName);
       }
-    }
-  }
-  //-----------------
-  void displayVideo() {
-    if (moviePlayer != null) {
-      image(moviePlayer, 0, 0);
     }
   }
 }
