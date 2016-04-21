@@ -43,7 +43,8 @@ void settings() {
 void setup() {
   GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
   GraphicsDevice[] devices = env.getScreenDevices();
-  int numberofScreens = devices.length;
+  numberOfScreens = devices.length;
+  println("____ " + numberOfScreens + " _____");
   surface.setTitle("ILO");
   minim = new Minim(this);
   oscP5 = new OscP5(this, 12121);
@@ -78,8 +79,8 @@ void setup() {
 }
 //-----------------
 void draw() {
-  if(firstFrame){
-    surface.setLocation(50, displayHeight/2 - height/2); 
+  if (firstFrame) {
+    surface.setLocation(50, displayHeight/2 - height/2);
   }
   background(25);
   shape(lightIcon, 50, 5, cellSize, cellSize);
@@ -223,7 +224,9 @@ class ChildApplet extends PApplet {
   //--------
   public void draw() {
     if (firstFrame) {
-      surface.setLocation(50 + parent.width + 50, displayHeight/2-height/2);
+      if (numberOfScreens < 2) {
+        surface.setLocation(50 + parent.width + 50, displayHeight/2-height/2);
+      }
       firstFrame = false;
     }
     background(0);
