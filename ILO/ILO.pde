@@ -12,8 +12,14 @@ import ddf.minim.*;
 import processing.video.*;
 import netP5.*;
 import oscP5.*;
+import java.awt.Component;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 ChildApplet child;
+PApplet parent = this;
+public int numberOfScreens;
+boolean firstFrame = true;
 public Minim minim;
 public Movie moviePlayer;
 OscP5 oscP5;
@@ -35,6 +41,9 @@ void settings() {
 }
 //----------------
 void setup() {
+  GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+  GraphicsDevice[] devices = env.getScreenDevices();
+  int numberofScreens = devices.length;
   surface.setTitle("ILO");
   minim = new Minim(this);
   oscP5 = new OscP5(this, 12121);
@@ -69,6 +78,9 @@ void setup() {
 }
 //-----------------
 void draw() {
+  if(firstFrame){
+    surface.setLocation(50, displayHeight/2 - height/2); 
+  }
   background(25);
   shape(lightIcon, 50, 5, cellSize, cellSize);
   shape(soundIcon, 50+cellSize*1.5, 5, cellSize, cellSize);
@@ -197,8 +209,11 @@ class ChildApplet extends PApplet {
   }
   //--------
   public void settings() {
-    //fullScreen(2);
-    size(600, 600);
+    if (numberOfScreens > 1) {
+      fullScreen(2);
+    } else {
+      size(600, 600);
+    }
     smooth();
   }
   //--------
@@ -207,6 +222,10 @@ class ChildApplet extends PApplet {
   }
   //--------
   public void draw() {
+    if (firstFrame) {
+      surface.setLocation(50 + parent.width + 50, displayHeight/2-height/2);
+      firstFrame = false;
+    }
     background(0);
     if (moviePlayer != null) {
       image(moviePlayer, 0, 0, width, height);
