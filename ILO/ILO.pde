@@ -194,7 +194,9 @@ void loadMovie(String fileName_) {
 }
 //---------------
 void playMovie() {
-  moviePlayer.play();
+  if (moviePlayer != null) {
+    moviePlayer.play();a
+  }
 }
 //---------------
 void movieEvent(Movie m) {
